@@ -13,7 +13,7 @@ export class Address {
   lat!: number;
 
   @Column()
-  long!: number;
+  lng!: number;
 
   @Column()
   pincode!: number;
