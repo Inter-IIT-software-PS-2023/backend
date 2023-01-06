@@ -4,17 +4,15 @@ import { Cluster } from "./Cluster";
 @Entity()
 export class Rider {
     @PrimaryGeneratedColumn("uuid")
-    id: string
+    id!: string
 
     @Column()
-    name: string
+    name!: string
 
     @Column()
-    mobile_number: number
+    mobile_number!: number
 
     @OneToOne(() => Cluster, cluster => cluster.rider)
-    cluster: Cluster
+    cluster!: Cluster
 
-    // @OneToOne(() => Cluster, cluster => cluster.rider)
-    // cluster:Cluster
 }
