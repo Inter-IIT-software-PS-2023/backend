@@ -11,8 +11,9 @@ type tempOrders = {     //this is a temporary type for the orders
     rider_phone: number,
 }
 
-export const newXLSXUpload = async () => {
-    const file = reader.readFile("./src/temp/data1.xlsx")
+export const newXLSXUpload = async (path:string) => {
+    // const file = reader.readFile("src/temp/data1.xlsx")
+    const file = reader.readFile(path)
     const fields = reader.utils.sheet_to_json(file.Sheets[file.SheetNames[0]])
     return await Promise.all(fields.map(async (item: any) => {
         return getGeocode((item as any).address)
