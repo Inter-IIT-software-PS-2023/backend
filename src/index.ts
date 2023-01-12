@@ -1,15 +1,14 @@
 import express, { Express, Request, Response } from 'express';
 import { AppDataSource } from './config';
 import dotenv from 'dotenv';
+import router from './routes/routes';
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Test route');
-});
+app.use("/route", router)
 
 AppDataSource.initialize()
   .then(() => {
