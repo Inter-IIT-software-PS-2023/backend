@@ -3,8 +3,8 @@ import { AppDataSource } from './config';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import router from './routes/routes';
-import algoRouter from './routes/algo';
+import orderRouter from './routes/orders';
+import riderRouter from './routes/rider';
 
 dotenv.config();
 
@@ -13,8 +13,8 @@ app.use(cors())
 app.use(bodyParser.json())
 const port = process.env.PORT
 
-app.use("/route", router)
-app.use("/algo", algoRouter)
+app.use("/orders", orderRouter)
+app.use("/rider", riderRouter)
 
 AppDataSource.initialize()
   .then(() => {

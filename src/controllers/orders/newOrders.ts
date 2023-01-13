@@ -3,7 +3,7 @@ import { newXLSXUpload } from "../../services/routes/newXLSXUpload";import multe
 
 const upload = multer({ dest: './src/temp/' })
 
-export const newRoutes = async (req: Request, res: Response) => {
+export const newOrders = async (req: Request, res: Response) => {
     try {
         upload.single("file")
         const filePath = req.file?.path as string

@@ -14,5 +14,4 @@ export class Rider {
 
     @OneToOne(() => Cluster, cluster => cluster.rider)
     cluster!: Cluster
-
 }
