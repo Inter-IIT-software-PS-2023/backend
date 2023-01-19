@@ -9,7 +9,7 @@ import riderRouter from './routes/rider';
 dotenv.config();
 
 const app: Express = express()
-app.use(cors())
+app.use(cors({origin: '*'}))
 app.use(bodyParser.json())
 const port = process.env.PORT
 
