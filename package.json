@@ -11,12 +11,14 @@
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
   },
   "dependencies": {
+    "@prisma/client": "^4.9.0",
     "body-parser": "^1.20.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "multer": "^1.4.5-lts.1",
     "pg": "^8.8.0",
+    "prisma": "^4.9.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.11",
     "xlsx": "^0.18.5"

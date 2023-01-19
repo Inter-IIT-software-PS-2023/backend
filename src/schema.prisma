@@ -1,0 +1,54 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Item {
+  id        String @id @default(uuid())
+  name     String
+  volWeight Int
+  dimX      Int
+  dimY      Int
+  dimZ      Int
+  order    Order @relation(fields: [orderId], references: [id])
+  orderId   String @unique
+}
+
+model Address {
+  id      String @id @default(uuid())
+  address String
+  location String
+  lat     Float
+  lng     Float
+  order  Order @relation(fields: [orderId], references: [id])
+  orderId String @unique
+}
+
+model Order {
+  id        String @id @default(uuid())
+  productId  String @unique
+  name     String
+  status    String
+  awb       String
+  address   Address?
+  items     Item?
+  cluster  Cluster @relation(fields: [clusterId], references: [id])
+  clusterId String 
+}
+
+model Rider {
+  id       String @id @default(uuid())
+  name    String
+  cluster Cluster?
+}
+
+model Cluster {
+  id       String @id @default(uuid())
+  riderId  String @unique
+  order    Order[] 
+  rider    Rider @relation(fields: [riderId], references: [id])
+}

@@ -7,7 +7,6 @@ export const newOrders = async (req: Request, res: Response) => {
     try {
         upload(req, res, async err => {
             if (!err) {
-                console.log(req.file)
                 const filePath = req.file?.path as string
                 const uploadResponse = await newXLSXUpload(filePath)
                 if (uploadResponse[0] instanceof Error)

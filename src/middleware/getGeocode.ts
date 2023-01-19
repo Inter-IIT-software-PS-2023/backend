@@ -1,3 +1,6 @@
+import dotenv from "dotenv"
+dotenv.config()
+
 const api_key = process.env.MAPBOX_API_KEY
 
 export const getGeocode = async (address: string) => {
