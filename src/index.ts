@@ -9,7 +9,7 @@ dotenv.config();
 
 const app: Express = express()
 app.use(cors({ origin: '*' }))
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '10mb'}))
 const port = process.env.PORT
 
 app.use("/orders", orderRouter)
