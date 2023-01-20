@@ -1,4 +1,3 @@
-import reader from 'xlsx'
 import { getGeocode } from '../../middleware/getGeocode'
 
 type tempOrders = {     //this is a temporary type for the orders
@@ -11,7 +10,7 @@ type tempOrders = {     //this is a temporary type for the orders
     customer_phone: number,
 }
 
-export const newXLSXUpload = async (data:any[]) => {
+export const parseNewOrders = async (data:any[]) => {
     return await Promise.all(data.map(async (item: any) => {
         return getGeocode((item as any).address)
             .then(coords => {

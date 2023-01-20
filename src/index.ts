@@ -13,7 +13,7 @@ app.use(bodyParser.json({limit: '10mb'}))
 const port = process.env.PORT
 
 app.use("/orders", orderRouter)
-app.use("/rider", riderRouter)
+app.use("/riders", riderRouter)
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);

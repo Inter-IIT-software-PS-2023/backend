@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { routingAlgo } from "../../services/rider/routingAlgo";
+import { routingAlgo } from "../../services/riders/routing.services";
 
 export const runRoutingAlgo = async (req: Request, res: Response) => {
     try {
