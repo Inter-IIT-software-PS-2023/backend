@@ -42,7 +42,7 @@ model Order {
 
 model Rider {
   id      String   @id @default(uuid())
-  username    String 
+  username    String @unique
   password    String
   cluster Cluster?
 }
