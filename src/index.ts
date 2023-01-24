@@ -9,9 +9,12 @@ dotenv.config();
 
 const app: Express = express()
 app.use(cors({ origin: '*' }))
-app.use(bodyParser.json({limit: '10mb'}))
+app.use(bodyParser.json({ limit: '10mb' }))
 const port = process.env.PORT
 
+app.get('/', (req, res) => {
+  res.send('Hello from server')
+})
 app.use("/orders", orderRouter)
 app.use("/riders", riderRouter)
 
