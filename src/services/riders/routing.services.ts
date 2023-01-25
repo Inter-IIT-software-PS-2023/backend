@@ -5,8 +5,9 @@ export const routingAlgo = async () => {
     const child = spawn("./src/services/riders/exe", ["300", "10", "12.971599", "77.638725"])
     const childProcessResp = new Promise((resolve, reject) => {
         child.stdout.on("data", (data: Buffer) => {
-            console.log(data.toString())
-            resolve(data.toString())
+            console.log("\n\n\nSuccess\n\n\n")
+            const resp = data.toString()
+            resolve(resp)
         })
         child.stderr.on("data", (data: Buffer) => {
             console.log(data.toString())
