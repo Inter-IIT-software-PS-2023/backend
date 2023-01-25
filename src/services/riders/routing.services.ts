@@ -2,7 +2,8 @@ import { execFile, spawn } from "child_process"
 
 export const routingAlgo = async () => {
 
-    const child = spawn("./exe", ["300", "10", "12.971599", "77.638725"])
+    const child = spawn("./src/services/riders/exe", ["300", "10", "12.971599", "77.638725"])
+    //C:\Users\jayan\Desktop\Jayanth\Coding\Inter IIT 2023\backend\src\services\riders\exe
     const childProcessResp = new Promise((resolve, reject) => {
         child.stdout.on("data", (data) => {
             console.log(data)
