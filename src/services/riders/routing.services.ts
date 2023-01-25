@@ -19,6 +19,7 @@ export const routingAlgo = async () => {
         execFile("./exe", ["300", "10", "12.971599", "77.638725"], (err, data) => {
             if (err) {
                 console.log("\n\n\nError\n\n\n")
+                console.log(err)
                 reject(err)
             }
             else {
