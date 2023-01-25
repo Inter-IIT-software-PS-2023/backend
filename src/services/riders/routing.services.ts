@@ -7,7 +7,6 @@ export const routingAlgo = async () => {
     const childProcessResp = new Promise((resolve, reject) => {
         child.stdout.on("data", (data) => {
             console.log(data)
-            resolve(data.toString())
         })
         child.stderr.on("data", (data) => {
             console.log(data)
