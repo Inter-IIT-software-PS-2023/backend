@@ -1,0 +1,481 @@
+Read and clustered 23 consignments
+Calling OSRM API for 17 points Time matrix ...
+{
+   "consignments" : [
+      {
+         "ID" : "SKU_46",
+         "reachTime" : 0,
+         "riderID" : 0
+      },
+      {
+         "ID" : "SKU_8",
+         "reachTime" : 0,
+         "riderID" : 0
+      },
+      {
+         "ID" : "SKU_54",
+         "reachTime" : 0,
+         "riderID" : 0
+      },
+      {
+         "ID" : "SKU_148",
+         "reachTime" : 0,
+         "riderID" : 0
+      },
+      {
+         "ID" : "SKU_129",
+         "reachTime" : 0,
+         "riderID" : 0
+      },
+      {
+         "ID" : "SKU_29",
+         "reachTime" : 0,
+         "riderID" : 4
+      },
+      {
+         "ID" : "SKU_80",
+         "reachTime" : 0,
+         "riderID" : 5
+      },
+      {
+         "ID" : "SKU_39",
+         "reachTime" : 0,
+         "riderID" : 5
+      },
+      {
+         "ID" : "SKU_88",
+         "reachTime" : 0,
+         "riderID" : 6
+      },
+      {
+         "ID" : "SKU_103",
+         "reachTime" : 0,
+         "riderID" : 7
+      },
+      {
+         "ID" : "SKU_131",
+         "reachTime" : 0,
+         "riderID" : 7
+      },
+      {
+         "ID" : "SKU_33",
+         "reachTime" : 0,
+         "riderID" : 7
+      },
+      {
+         "ID" : "SKU_47",
+         "reachTime" : 0,
+         "riderID" : 7
+      },
+      {
+         "ID" : "SKU_43",
+         "reachTime" : 0,
+         "riderID" : 7
+      },
+      {
+         "ID" : "SKU_106",
+         "reachTime" : 0,
+         "riderID" : 7
+      },
+      {
+         "ID" : "SKU_28",
+         "reachTime" : 0,
+         "riderID" : 7
+      },
+      {
+         "ID" : "SKU_90",
+         "reachTime" : 0,
+         "riderID" : 8
+      },
+      {
+         "ID" : "SKU_11",
+         "reachTime" : 0,
+         "riderID" : 8
+      },
+      {
+         "ID" : "SKU_65",
+         "reachTime" : 0,
+         "riderID" : 8
+      },
+      {
+         "ID" : "SKU_43",
+         "reachTime" : 0,
+         "riderID" : 8
+      },
+      {
+         "ID" : "SKU_86",
+         "reachTime" : 0,
+         "riderID" : 8
+      },
+      {
+         "ID" : "SKU_118",
+         "reachTime" : 0,
+         "riderID" : 9
+      },
+      {
+         "ID" : "SKU_79",
+         "reachTime" : 0,
+         "riderID" : 9
+      }
+   ],
+   "riders" : [
+      {
+         "ID" : 0,
+         "route" : [
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 0
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_129"
+                  }
+               ],
+               "latitude" : 12.916586875915527,
+               "longitude" : 77.592308044433594,
+               "reachTime" : 13
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_46"
+                  },
+                  {
+                     "ID" : "SKU_8"
+                  },
+                  {
+                     "ID" : "SKU_54"
+                  },
+                  {
+                     "ID" : "SKU_148"
+                  }
+               ],
+               "latitude" : 12.907441139221191,
+               "longitude" : 77.586921691894531,
+               "reachTime" : 16
+            },
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 31
+            }
+         ]
+      },
+      {
+         "ID" : 1,
+         "route" : [
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 0
+            },
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 0
+            }
+         ]
+      },
+      {
+         "ID" : 2,
+         "route" : [
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 0
+            },
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 0
+            }
+         ]
+      },
+      {
+         "ID" : 3,
+         "route" : [
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 0
+            },
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 0
+            }
+         ]
+      },
+      {
+         "ID" : 4,
+         "route" : [
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 0
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_29"
+                  }
+               ],
+               "latitude" : 12.934798240661621,
+               "longitude" : 77.614715576171875,
+               "reachTime" : 8
+            },
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 17
+            }
+         ]
+      },
+      {
+         "ID" : 5,
+         "route" : [
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 0
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_39"
+                  }
+               ],
+               "latitude" : 12.920424461364746,
+               "longitude" : 77.653564453125,
+               "reachTime" : 12
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_80"
+                  }
+               ],
+               "latitude" : 12.917630195617676,
+               "longitude" : 77.652488708496094,
+               "reachTime" : 14
+            },
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 26
+            }
+         ]
+      },
+      {
+         "ID" : 6,
+         "route" : [
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 0
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_88"
+                  }
+               ],
+               "latitude" : 44.971843719482422,
+               "longitude" : -64.925094604492188,
+               "reachTime" : 9272
+            },
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 18204
+            }
+         ]
+      },
+      {
+         "ID" : 7,
+         "route" : [
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 0
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_28"
+                  }
+               ],
+               "latitude" : 12.973291397094727,
+               "longitude" : 77.640464782714844,
+               "reachTime" : 2
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_43"
+                  }
+               ],
+               "latitude" : 12.981236457824707,
+               "longitude" : 77.639053344726562,
+               "reachTime" : 4
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_33"
+                  }
+               ],
+               "latitude" : 12.993147850036621,
+               "longitude" : 77.661636352539062,
+               "reachTime" : 9
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_103"
+                  }
+               ],
+               "latitude" : 12.981298446655273,
+               "longitude" : 77.636955261230469,
+               "reachTime" : 13
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_47"
+                  }
+               ],
+               "latitude" : 12.971822738647461,
+               "longitude" : 77.636016845703125,
+               "reachTime" : 15
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_131"
+                  }
+               ],
+               "latitude" : 12.971822738647461,
+               "longitude" : 77.636016845703125,
+               "reachTime" : 15
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_106"
+                  }
+               ],
+               "latitude" : 12.963818550109863,
+               "longitude" : 77.63800048828125,
+               "reachTime" : 17
+            },
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 20
+            }
+         ]
+      },
+      {
+         "ID" : 8,
+         "route" : [
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 0
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_86"
+                  }
+               ],
+               "latitude" : 12.935297966003418,
+               "longitude" : 77.694091796875,
+               "reachTime" : 17
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_90"
+                  },
+                  {
+                     "ID" : "SKU_11"
+                  },
+                  {
+                     "ID" : "SKU_65"
+                  },
+                  {
+                     "ID" : "SKU_43"
+                  }
+               ],
+               "latitude" : 12.955257415771484,
+               "longitude" : 77.698417663574219,
+               "reachTime" : 26
+            },
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 36
+            }
+         ]
+      },
+      {
+         "ID" : 9,
+         "route" : [
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 0
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_118"
+                  }
+               ],
+               "latitude" : 12.979120254516602,
+               "longitude" : 77.591300964355469,
+               "reachTime" : 13
+            },
+            {
+               "consignments" : [
+                  {
+                     "ID" : "SKU_79"
+                  }
+               ],
+               "latitude" : 12.972539901733398,
+               "longitude" : 77.6075439453125,
+               "reachTime" : 22
+            },
+            {
+               "consignments" : [],
+               "latitude" : 12.971598625183105,
+               "longitude" : 77.638725280761719,
+               "reachTime" : 29
+            }
+         ]
+      }
+   ]
+}
