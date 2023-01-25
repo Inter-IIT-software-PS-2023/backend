@@ -1,4 +1,5 @@
 import { execFile, spawn } from "child_process"
+import fs from "fs"
 
 export const routingAlgo = async () => {
 
@@ -6,8 +7,12 @@ export const routingAlgo = async () => {
     const childProcessResp = new Promise((resolve, reject) => {
         child.stdout.on("data", (data: Buffer) => {
             console.log("\n\n\nSuccess\n\n\n")
-            const resp = data.toString()
-            resolve(resp)
+            fs.writeFile("./output.txt", data.toString(), (err) => {
+                if (err)
+                    reject(err)
+                else
+                    resolve("Success")
+            })
         })
         child.stderr.on("data", (data: Buffer) => {
             console.log(data.toString())
