@@ -30,14 +30,14 @@ model Address {
 
 model Order {
   id        String   @id @default(uuid())
-  productId String   @unique
+  productId String  
   name      String
   status    String
   awb       String
   address   Address?
   items     Item?
-  cluster   Cluster  @relation(fields: [clusterId], references: [id])
-  clusterId String
+  cluster   Cluster?  @relation(fields: [clusterId], references: [id], onDelete: Cascade)
+  clusterId String?
 }
 
 model Rider {

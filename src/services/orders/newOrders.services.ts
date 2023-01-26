@@ -9,24 +9,36 @@ type tempOrders = {     //this is a temporary type for the orders
     location: string,
     lng: number,
     lat: number,
-    customer_name: string,
-    customer_phone: number,
+    name: string,
+    awb: number,
 }
 
-export const parseNewOrders = async (data:any[]) => {
+export const parseNewOrders = async (data: any[]) => {
     return await Promise.all(data.map(async (item: any) => {
         return getGeocode((item as any).address)
-            .then(coords => {
-                if (Array.isArray(coords))
-                    return {
-                        product_id: (item as any).product_id,
-                        address: (item as any).address,
-                        location: (item as any).location,
-                        lng: coords[0],
-                        lat: coords[1],
-                        customer_name: (item as any).names,
-                        customer_phone: (item as any).numbers
-                    } as tempOrders
+            .then(async coords => {
+                if (Array.isArray(coords)) {
+                    const createOrder = await prisma.order.create({
+                        data: {
+                            productId: (item as any).product_id,
+                            name: (item as any).names,
+                            status: "PENDING",
+                            awb: `${(item as any).AWB}`,
+                            address: {
+                                create: {
+                                    address: (item as any).address,
+                                    location: (item as any).location,
+                                    lng: coords[0],
+                                    lat: coords[1],
+                                }
+                            }
+                        } as any,
+                        include: {
+                            address: true
+                        }
+                    })
+                    return
+                }
                 else return coords
             })
             .catch(err => err)
