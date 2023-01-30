@@ -13,6 +13,7 @@ export const routingAlgo = async () => {
     }) as any
     const noOfOrders = consignments.length
     const noOfRiders = await prisma.rider.count()
+    const noOfHours = 5
     const warehouseLocation = {
         lat: 12.971599,
         lng: 77.638725
@@ -31,7 +32,7 @@ export const routingAlgo = async () => {
                 reject({ err: err.message })
             }
             else {
-                const child = spawn("./src/services/riders/exe", [noOfOrders, noOfRiders, "12.971599", "77.638725"])
+                const child = spawn("./src/services/riders/exe", [noOfHours.toString(), "./input1.txt", "./output.txt"])
                 child.stdout.on("data", () => {
                     fs.readFile("./output.txt", (err, data) => {
                         if (err)
