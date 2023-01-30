@@ -1,40 +1,52 @@
-import { execFile, spawn } from "child_process"
+import { spawn } from "child_process"
+import { PrismaClient } from "@prisma/client"
 import fs from "fs"
+
+const prisma = new PrismaClient()
 
 export const routingAlgo = async () => {
 
-    const child = spawn("./src/services/riders/exe", ["300", "10", "12.971599", "77.638725"])
-    const childProcessResp = new Promise((resolve, reject) => {
-        child.stdout.on("data", (data: Buffer) => {
-            console.log("\n\n\nSuccess\n\n\n")
-            fs.writeFile("./output.txt", data.toString(), (err) => {
-                if (err)
-                    reject(err)
-                else
-                    resolve("Success")
-            })
-        })
-        child.stderr.on("data", (data: Buffer) => {
-            console.log(data.toString())
-            reject(data.toString())
+    const consignments = await prisma.order.findMany({
+        include: {
+            address: true
+        }
+    }) as any
+    const noOfOrders = consignments.length
+    const noOfRiders = await prisma.rider.count()
+    const warehouseLocation = {
+        lat: 12.971599,
+        lng: 77.638725
+    }
+    let algoInput = {
+        noOfOrders: noOfOrders,
+        noOfRiders: noOfRiders,
+        warehouseLocation: warehouseLocation,
+        consignments: consignments
+    } as any
+    algoInput = JSON.stringify(algoInput)
+    algoInput.replace("\n", " ")
+    const algoOutput = new Promise((resolve, reject) => {
+        fs.writeFile("input1.txt", algoInput, (err) => {
+            if (err) {
+                reject({ err: err.message })
+            }
+            else {
+                const child = spawn("./src/services/riders/exe", [noOfOrders, noOfRiders, "12.971599", "77.638725"])
+                child.stdout.on("data", () => {
+                    fs.readFile("./output.txt", (err, data) => {
+                        if (err)
+                            reject({ err: err.message })
+                        else {
+                            resolve(JSON.parse(data.toString()))
+                        }
+                    })
+                })
+                child.stderr.on("data", (data: Buffer) => {
+                    console.log(data.toString())
+                    reject({ err: data.toString() })
+                })
+            }
         })
     })
-    return await childProcessResp
-
-    // const childProcessResp = new Promise((resolve, reject) => {
-    //     execFile("./exe", ["300", "10", "12.971599", "77.638725"], (err, data) => {
-    //         if (err) {
-    //             console.log("\n\n\nError\n\n\n")
-    //             console.log(err)
-    //             reject(err)
-    //         }
-    //         else {
-    //             console.log("\n\n\Data\n\n\n")
-    //             resolve(data)
-    //         }
-    //     })
-    // })
-    // return await childProcessResp
+    return algoOutput
 }
-
-

@@ -1,0 +1,15 @@
+{
+    "clusters":[
+        {
+                "riderId":"",       // Please start the rider ID from 1, not 0. 
+                "route":[
+                    {
+                        "productId":"",
+                        "lat":"",
+                        "lng":"",
+                        "time":""
+                    }
+                ]
+        }
+    ]
+}

@@ -1,7 +1,6 @@
 dist/
 node_modules/
 .env
-temp/
-.vscode/
-a.exe
-files/
+output-format.txt
+input.txt
+intput1.txt
