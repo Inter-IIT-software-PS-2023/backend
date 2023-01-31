@@ -59,25 +59,20 @@ export const routingAlgo = async () => {
                 //     reject({ err: err.message })
                 // })
 
-                exec(`"${execPath}" ${noOfHours} < "${inputFilePath}" > "${outputFilePath}"`, (err, stdout, stderr) => {
+                const resp = exec(`"${execPath}" ${noOfHours} < "${inputFilePath}" > "${outputFilePath}"`, (err, stdout, stderr) => {
                     if (err) {
                         console.log("err ", err)
                         reject({ err: err.message })
                     }
-                    else if (stdout) {
-                        console.log("stdout ", stdout)
-                        fs.readFile(outputFilePath, (err, data) => {
-                            if (err)
-                                reject({ err: err.message })
-                            else {
-                                resolve(JSON.parse(data.toString()))
-                            }
-                        })
-                    }
-                    else if (stderr) {
-                        console.log("stderr ", stderr)
-                        reject({ err: stderr })
-                    }
+                    console.log("stdout ", stdout)
+                    console.log("stderr ", stderr)
+                    fs.readFile(outputFilePath, (err, data) => {
+                        if (err)
+                            reject({ err: err.message })
+                        else {
+                            resolve(JSON.parse(data.toString()))
+                        }
+                    })
                 })
             }
         })
