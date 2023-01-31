@@ -37,8 +37,9 @@ export const routingAlgo = async () => {
             }
             else {
                 const child = spawn(execPath, [noOfHours.toString(), "<", inputFilePath, ">", outputFilePath])
-                child.on("close", () => {
+                child.on("close", (msg) => {
                     console.log("\n\n\n Child process exited \n\n\n")
+                    console.log("msg ", msg)
                     fs.readFile(outputFilePath, (err, data) => {
                         if (err)
                             reject({ err: err.message })
@@ -52,7 +53,8 @@ export const routingAlgo = async () => {
                     reject({ err: data.toString() })
                 })
                 child.on("error", (err) => {
-                    console.log(err)
+                    console.log("\n\n\n Error \n\n\n")
+                    console.log("err ",err)
                     reject({ err: err.message })
                 })
             }
