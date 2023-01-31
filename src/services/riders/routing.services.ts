@@ -36,6 +36,8 @@ export const routingAlgo = async () => {
                 reject({ err: err.message })
             }
             else {
+                const temp = [execPath, noOfHours.toString(), "<", inputFilePath, ">", outputFilePath]
+                console.log("temp ", temp.join(" "))
                 const child = spawn(execPath, [noOfHours.toString(), "<", inputFilePath, ">", outputFilePath])
                 child.on("close", (msg) => {
                     console.log("\n\n\n Child process exited \n\n\n")
@@ -54,7 +56,7 @@ export const routingAlgo = async () => {
                 })
                 child.on("error", (err) => {
                     console.log("\n\n\n Error \n\n\n")
-                    console.log("err ",err)
+                    console.log("err ", err)
                     reject({ err: err.message })
                 })
             }
