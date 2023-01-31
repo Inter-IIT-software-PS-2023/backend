@@ -51,6 +51,10 @@ export const routingAlgo = async () => {
                     console.log(data.toString())
                     reject({ err: data.toString() })
                 })
+                child.on("error", (err) => {
+                    console.log(err)
+                    reject({ err: err.message })
+                })
             }
         })
     })
