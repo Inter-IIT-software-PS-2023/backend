@@ -1,9 +1,10 @@
-import { spawn } from "child_process"
+import { spawn, exec } from "child_process"
 import { PrismaClient } from "@prisma/client"
 import fs from "fs"
 import path from "path"
 
 const prisma = new PrismaClient()
+
 
 export const routingAlgo = async () => {
 
@@ -36,28 +37,47 @@ export const routingAlgo = async () => {
                 reject({ err: err.message })
             }
             else {
-                const temp = [execPath, noOfHours.toString(), "<", inputFilePath, ">", outputFilePath]
-                console.log("temp ", temp.join(" "))
-                const child = spawn(execPath, [noOfHours.toString(), "<", inputFilePath, ">", outputFilePath])
-                child.on("close", (msg) => {
-                    console.log("\n\n\n Child process exited \n\n\n")
-                    console.log("msg ", msg)
-                    fs.readFile(outputFilePath, (err, data) => {
-                        if (err)
-                            reject({ err: err.message })
-                        else {
-                            resolve(JSON.parse(data.toString()))
-                        }
-                    })
-                })
-                child.stderr.on("data", (data: Buffer) => {
-                    console.log(data.toString())
-                    reject({ err: data.toString() })
-                })
-                child.on("error", (err) => {
-                    console.log("\n\n\n Error \n\n\n")
-                    console.log("err ", err)
-                    reject({ err: err.message })
+                // const child = spawn(execPath, [noOfHours.toString(), "<", inputFilePath, ">", outputFilePath])
+                // child.on("close", (msg) => {
+                //     console.log("\n\n\n Child process exited \n\n\n")
+                //     console.log("msg ", msg)
+                //     fs.readFile(outputFilePath, (err, data) => {
+                //         if (err)
+                //             reject({ err: err.message })
+                //         else {
+                //             resolve(JSON.parse(data.toString()))
+                //         }
+                //     })
+                // })
+                // child.stderr.on("data", (data: Buffer) => {
+                //     console.log(data.toString())
+                //     reject({ err: data.toString() })
+                // })
+                // child.on("error", (err) => {
+                //     console.log("\n\n\n Error \n\n\n")
+                //     console.log("err ", err)
+                //     reject({ err: err.message })
+                // })
+
+                exec(`"${execPath}" ${noOfHours} < "${inputFilePath}" > "${outputFilePath}"`, (err, stdout, stderr) => {
+                    if (err) {
+                        console.log("err ", err)
+                        reject({ err: err.message })
+                    }
+                    else if (stdout) {
+                        console.log("stdout ", stdout)
+                        fs.readFile(outputFilePath, (err, data) => {
+                            if (err)
+                                reject({ err: err.message })
+                            else {
+                                resolve(JSON.parse(data.toString()))
+                            }
+                        })
+                    }
+                    else if (stderr) {
+                        console.log("stderr ", stderr)
+                        reject({ err: stderr })
+                    }
                 })
             }
         })
