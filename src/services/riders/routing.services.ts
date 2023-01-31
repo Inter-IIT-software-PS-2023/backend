@@ -1,6 +1,7 @@
 import { spawn } from "child_process"
 import { PrismaClient } from "@prisma/client"
 import fs from "fs"
+import path from "path"
 
 const prisma = new PrismaClient()
 
@@ -24,17 +25,23 @@ export const routingAlgo = async () => {
         warehouseLocation: warehouseLocation,
         consignments: consignments
     } as any
+    const execPath = path.join(__dirname, "../../../src/algorithms/exe")
+    const inputFilePath = path.join(__dirname, "../../../src/algorithms/routingInput.txt")
+    const outputFilePath = path.join(__dirname, "../../../src/algorithms/routingOutput.txt")
     algoInput = JSON.stringify(algoInput)
     algoInput.replace("\n", " ")
     const algoOutput = new Promise((resolve, reject) => {
-        fs.writeFile("input1.txt", algoInput, (err) => {
+        fs.writeFile(inputFilePath, algoInput, (err) => {
             if (err) {
                 reject({ err: err.message })
             }
             else {
-                const child = spawn("./src/services/riders/exe", [noOfHours.toString(), "./input1.txt", "./output.txt"])
+                console.log("\n\n\n\n\n", execPath)
+                console.log("\n\n\n\n\n", inputFilePath)
+                console.log("\n\n\n\n\n", outputFilePath)
+                const child = spawn(execPath, [noOfHours.toString(), "<", inputFilePath, ">", outputFilePath])
                 child.stdout.on("data", () => {
-                    fs.readFile("./output.txt", (err, data) => {
+                    fs.readFile(outputFilePath, (err, data) => {
                         if (err)
                             reject({ err: err.message })
                         else {
