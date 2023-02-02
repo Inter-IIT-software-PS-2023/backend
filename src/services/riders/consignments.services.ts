@@ -1,6 +1,23 @@
-import jwt from "jsonwebtoken"
+import { PrismaClient } from "@prisma/client"
+
+const prisma = new PrismaClient()
 
 export const getRiderConsignments = async (token: string) => {
-    const decodedData = jwt.verify(token, process.env.JWT_SECRET || "")
-    return decodedData
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    const riderId = JSON.parse(atob(base64)).id
+    const cluster = await prisma.cluster.findUnique({
+        where: {
+            riderId: riderId
+        }
+    }) as any
+    const consignments = await prisma.order.findMany({
+        where: {
+            clusterId: cluster.id
+        },
+        include: {
+            address: true,
+        }
+    })
+    return consignments
 }
