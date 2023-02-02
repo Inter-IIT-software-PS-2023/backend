@@ -11,7 +11,7 @@ export const runRoutingAlgo = async (req: Request, res: Response) => {
                 status: "ASSIGNED",
             },
             data: {
-                status: "PLACED",
+                status: "PENDING",
                 clusterId: null
             }
         })
