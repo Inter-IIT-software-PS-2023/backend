@@ -8,6 +8,6 @@ export const riderConsignments = async (req: Request, res: Response) => {
         res.json({ message: "Hello World", data: consignments })
     }
     catch (err: any) {
-        res.status(400).json({ message: err.message })
+        res.status(400).json({ err: "Cannot fetch consignments" })
     }
 }

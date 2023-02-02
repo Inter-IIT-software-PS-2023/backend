@@ -14,6 +14,6 @@ export const createNewRiders = async (req: Request, res: Response) => {
         res.json({ msg: "Riders created successfully" })
     }
     catch (err) {
-        res.status(400).send({ Err: (err as Error).message })
+        res.status(400).send({ err:"Cannot assign riders" })
     }
 }
