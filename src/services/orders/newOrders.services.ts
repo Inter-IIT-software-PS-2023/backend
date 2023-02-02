@@ -23,7 +23,7 @@ export const parseNewOrders = async (data: any[]) => {
                             productId: (item as any).product_id,
                             name: (item as any).names,
                             status: "PENDING",
-                            awb: `${(item as any).numbers}`,
+                            awb: `${(item as any).AWB}`,
                             address: {
                                 create: {
                                     address: (item as any).address,

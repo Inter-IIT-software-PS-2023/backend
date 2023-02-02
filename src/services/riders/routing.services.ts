@@ -1,5 +1,5 @@
 import { spawn, exec } from "child_process"
-import { PrismaClient } from "@prisma/client"
+import { Cluster, Order, PrismaClient } from "@prisma/client"
 import fs from "fs"
 import path from "path"
 
@@ -52,7 +52,7 @@ export const routingAlgo = async () => {
                             item.route?.shift()
                             const endTime = item.route?.pop()?.time
                             const rider = riders.find((rider: any) => rider.username === `dpartner_${item.riderId}`) as any
-                            const newCluster = await prisma.cluster.create({
+                            const newCluster: Cluster = await prisma.cluster.create({
                                 data: {
                                     riderId: rider.id,
                                     endTime: endTime
@@ -63,10 +63,10 @@ export const routingAlgo = async () => {
                             })
                             return item.route?.map(async (order: any) => {
                                 return new Promise(async (resolve, reject) => {
-                                    const newOrder = await prisma.order.update({
+                                    const newOrder: Order = await prisma.order.update({
                                         where: {
-                                            productId: order.productId
-                                        },
+                                            awb: order.awb 
+                                        } as any,
                                         data: {
                                             clusterId: newCluster.id,
                                             reachTime: order.time,

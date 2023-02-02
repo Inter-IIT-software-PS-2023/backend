@@ -30,10 +30,10 @@ model Address {
 
 model Order {
   id          String   @id @default(uuid())
-  productId   String   @unique
+  productId   String
   name        String
   status      String
-  awb         String
+  awb         String   @unique
   reachTime   Int      @default(0)
   deliveryLat Float    @default(0)
   deliveryLng Float    @default(0)

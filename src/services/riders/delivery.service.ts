@@ -2,11 +2,11 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()
 
-export const deliveryService = async (productId: string, lat: string, lng: string) => {
+export const deliveryService = async (awb: string, lat: string, lng: string) => {
     const updatedOrder = await prisma.order.update({
         where: {
-            productId: productId
-        },
+            awb: awb
+        } as any,
         data: {
             status: "DELIVERED",
             deliveryLat: parseFloat(lat),
