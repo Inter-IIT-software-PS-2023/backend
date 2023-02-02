@@ -7,7 +7,10 @@ const prisma = new PrismaClient()
 export const newOrders = async (req: Request, res: Response) => {
     try {
         await prisma.address.deleteMany({})
+        await prisma.item.deleteMany({})
         await prisma.order.deleteMany({})
+        await prisma.cluster.deleteMany({})
+        await prisma.rider.deleteMany({})
         const uploadResponse = await parseNewOrders(req.body)
         if (uploadResponse[0] instanceof Error)
             throw new Error(uploadResponse[0].message)

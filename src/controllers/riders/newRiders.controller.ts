@@ -7,7 +7,6 @@ const prisma = new PrismaClient()
 export const createNewRiders = async (req: Request, res: Response) => {
     try {
         const num = req.body.num
-        const deleteUsers = await prisma.rider.deleteMany({})
         const createNewRidersResponse = await createNewRidersService(num as number)
         await prisma.rider.createMany({
             data: createNewRidersResponse

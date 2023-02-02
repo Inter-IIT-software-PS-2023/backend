@@ -1,16 +1,13 @@
+import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 import { routingAlgo } from "../../services/riders/routing.services";
 
+const prisma = new PrismaClient()
+
 export const runRoutingAlgo = async (req: Request, res: Response) => {
     try {
-        const runAlgoResponse = await routingAlgo() as Promise<any>
+        const runAlgoResponse = await routingAlgo()
         res.json(runAlgoResponse)
-          //  .then((data) => {
-          //      res.json(data)
-          //  })
-          //  .catch((err) => {
-          //     res.status(400).send({ Err: (err as Error).message })
-          //  })
     }
     catch (err) {
         res.status(400).send({ Err: (err as Error).message })

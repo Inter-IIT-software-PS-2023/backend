@@ -13,6 +13,7 @@ export const routingAlgo = async () => {
             address: true
         }
     }) as any
+    const riders = await prisma.rider.findMany({})
     const noOfOrders = consignments.length
     const noOfRiders = await prisma.rider.count()
     const noOfHours = 5
@@ -37,42 +38,55 @@ export const routingAlgo = async () => {
                 reject({ err: err.message })
             }
             else {
-                // const child = spawn(execPath, [noOfHours.toString(), "<", inputFilePath, ">", outputFilePath])
-                // child.on("close", (msg) => {
-                //     console.log("\n\n\n Child process exited \n\n\n")
-                //     console.log("msg ", msg)
-                //     fs.readFile(outputFilePath, (err, data) => {
-                //         if (err)
-                //             reject({ err: err.message })
-                //         else {
-                //             resolve(JSON.parse(data.toString()))
-                //         }
-                //     })
-                // })
-                // child.stderr.on("data", (data: Buffer) => {
-                //     console.log(data.toString())
-                //     reject({ err: data.toString() })
-                // })
-                // child.on("error", (err) => {
-                //     console.log("\n\n\n Error \n\n\n")
-                //     console.log("err ", err)
-                //     reject({ err: err.message })
-                // })
-
-                const resp = exec(`"${execPath}" ${noOfHours} < "${inputFilePath}" > "${outputFilePath}"`, (err, stdout, stderr) => {
-                    if (err) {
-                        console.log("err ", err)
+                // exec(`"${execPath}" ${noOfHours} < "${inputFilePath}" > "${outputFilePath}"`, (err, stdout, stderr) => {
+                // if (err) {
+                // console.log("err ", err)
+                // reject({ err: err.message })
+                // }
+                fs.readFile(outputFilePath, async (err, data) => {
+                    if (err)
                         reject({ err: err.message })
+                    else {
+                        const outputFileData = JSON.parse(data.toString())
+                        outputFileData.clusters.map(async (item: any) => {
+                            item.route?.shift()
+                            const endTime = item.route?.pop()?.time
+                            const rider = riders.find((rider: any) => rider.username === `dpartner_${item.riderId}`) as any
+                            const newCluster = await prisma.cluster.create({
+                                data: {
+                                    riderId: rider.id,
+                                    endTime: endTime
+                                } as any,
+                                include: {
+                                    order: true
+                                }
+                            })
+                            item.route?.map(async (order: any) => {
+                                await prisma.order.update({
+                                    where: {
+                                        productId: order.productId
+                                    },
+                                    data: {
+                                        clusterId: newCluster.id,
+                                        reachTime: order.time,
+                                        status: "ASSIGNED"
+                                    }
+                                })
+                            })
+
+                        })
+                        resolve(await prisma.cluster.findMany({
+                            include: {
+                                order: {
+                                    include: {
+                                        address: true
+                                    }
+                                },
+                                rider: true
+                            }
+                        }))
                     }
-                    console.log("stdout ", stdout)
-                    console.log("stderr ", stderr)
-                    fs.readFile(outputFilePath, (err, data) => {
-                        if (err)
-                            reject({ err: err.message })
-                        else {
-                            resolve(JSON.parse(data.toString()))
-                        }
-                    })
+                    // })
                 })
             }
         })
