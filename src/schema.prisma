@@ -29,16 +29,18 @@ model Address {
 }
 
 model Order {
-  id        String   @id @default(uuid())
-  productId String  @unique
-  name      String
-  status    String
-  awb       String
-  reachTime Int      @default(0)
-  address   Address?
-  items     Item?
-  cluster   Cluster? @relation(fields: [clusterId], references: [id], onDelete: Cascade)
-  clusterId String?
+  id          String   @id @default(uuid())
+  productId   String   @unique
+  name        String
+  status      String
+  awb         String
+  reachTime   Int      @default(0)
+  deliveryLat Float    @default(0)
+  deliveryLng Float    @default(0)
+  address     Address?
+  items       Item?
+  cluster     Cluster? @relation(fields: [clusterId], references: [id], onDelete: Cascade)
+  clusterId   String?
 }
 
 model Rider {
