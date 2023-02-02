@@ -11,7 +11,7 @@ export const createNewRiders = async (req: Request, res: Response) => {
         await prisma.rider.createMany({
             data: createNewRidersResponse
         })
-        res.json(createNewRidersResponse)
+        res.json({ msg: "Riders created successfully" })
     }
     catch (err) {
         res.status(400).send({ Err: (err as Error).message })

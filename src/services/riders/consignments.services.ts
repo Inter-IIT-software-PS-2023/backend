@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client"
+import { Cluster } from "@prisma/client";
+import { Order } from "@prisma/client";
 
 const prisma = new PrismaClient()
 
@@ -10,7 +12,7 @@ export const getRiderConsignments = async (token: string) => {
         where: {
             riderId: riderId
         }
-    }) as any
+    }) as Cluster
     const consignments = await prisma.order.findMany({
         where: {
             clusterId: cluster.id
@@ -18,6 +20,6 @@ export const getRiderConsignments = async (token: string) => {
         include: {
             address: true,
         }
-    })
+    }) as Order[]
     return consignments
 }
