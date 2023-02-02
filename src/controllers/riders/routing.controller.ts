@@ -6,6 +6,16 @@ const prisma = new PrismaClient()
 
 export const runRoutingAlgo = async (req: Request, res: Response) => {
     try {
+        await prisma.order.updateMany({
+            where: {
+                status: "ASSIGNED",
+            },
+            data: {
+                status: "PLACED",
+                clusterId: null
+            }
+        })
+        await prisma.cluster.deleteMany({})
         const runAlgoResponse = await routingAlgo()
         res.json(runAlgoResponse)
     }
