@@ -38,62 +38,62 @@ export const routingAlgo = async () => {
                 reject({ err: err.message })
             }
             else {
-                // exec(`"${execPath}" ${noOfHours} < "${inputFilePath}" > "${outputFilePath}"`, (err, stdout, stderr) => {
-                //     if (err) {
-                //         console.log("err ", err)
-                //         reject({ err: err.message })
-                //     }
-                fs.readFile(outputFilePath, async (err, data) => {
-                    if (err)
+                exec(`"${execPath}" ${noOfHours} < "${inputFilePath}" > "${outputFilePath}"`, (err, stdout, stderr) => {
+                    if (err) {
+                        console.log("err ", err)
                         reject({ err: err.message })
-                    else {
-                        const outputFileData = JSON.parse(data.toString())
-                        const newOrderPromises = outputFileData.clusters.map(async (item: any) => {
-                            item.route?.shift()
-                            const endTime = item.route?.pop()?.time
-                            const rider = riders.find((rider: any) => rider.username === `dpartner_${item.riderId}`) as any
-                            const newCluster: Cluster = await prisma.cluster.create({
-                                data: {
-                                    riderId: rider.id,
-                                    endTime: endTime
-                                } as any,
-                                include: {
-                                    order: true
-                                }
-                            })
-                            return item.route?.map(async (order: any) => {
-                                return new Promise(async (resolve, reject) => {
-                                    const newOrder: Order = await prisma.order.update({
-                                        where: {
-                                            awb: order.awb
-                                        } as any,
-                                        data: {
-                                            clusterId: newCluster.id,
-                                            reachTime: order.time,
-                                            status: "ASSIGNED"
-                                        }
-                                    })
-                                    resolve(newOrder)
-                                })
-                            })
-
-                        })
-                        Promise.all(newOrderPromises)
-                            .then(async () => {
-                                resolve(await prisma.cluster.findMany({
-                                    include: {
-                                        order: {
-                                            include: {
-                                                address: true
-                                            }
-                                        },
-                                        rider: true
-                                    }
-                                }))
-                            })
                     }
+                    fs.readFile(outputFilePath, async (err, data) => {
+                        if (err)
+                            reject({ err: err.message })
+                        else {
+                            const outputFileData = JSON.parse(data.toString())
+                            const newOrderPromises = outputFileData.clusters.map(async (item: any) => {
+                                item.route?.shift()
+                                const endTime = item.route?.pop()?.time
+                                const rider = riders.find((rider: any) => rider.username === `dpartner_${item.riderId}`) as any
+                                const newCluster: Cluster = await prisma.cluster.create({
+                                    data: {
+                                        riderId: rider.id,
+                                        endTime: endTime
+                                    } as any,
+                                    include: {
+                                        order: true
+                                    }
+                                })
+                                return item.route?.map(async (order: any) => {
+                                    return new Promise(async (resolve, reject) => {
+                                        const newOrder: Order = await prisma.order.update({
+                                            where: {
+                                                awb: order.awb
+                                            } as any,
+                                            data: {
+                                                clusterId: newCluster.id,
+                                                reachTime: order.time,
+                                                status: "ASSIGNED"
+                                            }
+                                        })
+                                        resolve(newOrder)
+                                    })
+                                })
+
+                            })
+                            Promise.all(newOrderPromises)
+                                .then(async () => {
+                                    resolve(await prisma.cluster.findMany({
+                                        include: {
+                                            order: {
+                                                include: {
+                                                    address: true
+                                                }
+                                            },
+                                            rider: true
+                                        }
+                                    }))
+                                })
+                        }
+                    })
                 })
-                // })
             }
         })
     })
