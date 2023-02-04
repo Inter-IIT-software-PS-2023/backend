@@ -8,9 +8,9 @@ import { deliveryController } from "../controllers/riders/delivery.controller";
 
 const riderRouter = Router();
 riderRouter.get('/routing', runRoutingAlgo);
-riderRouter.get('/new', createNewRiders);
+riderRouter.post('/new', createNewRiders);
 riderRouter.post('/login', authRider);
 riderRouter.get('/consignments', verifyToken, riderConsignments);
-riderRouter.get('/delivery', verifyToken, deliveryController);
+riderRouter.post('/delivery', verifyToken, deliveryController);
 
 export default riderRouter;
