@@ -9,7 +9,7 @@ export const createNewRiders = async (req: Request, res: Response) => {
         const num = req.body.num
         const createNewRidersResponse = await createNewRidersService(num as number)
         await prisma.rider.createMany({
-            data: createNewRidersResponse
+            data: [{ username: "admin", password: "admin" }, ...createNewRidersResponse]
         })
         res.json({ msg: "Riders created successfully", data: createNewRidersResponse })
     }

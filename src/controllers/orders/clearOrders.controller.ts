@@ -9,6 +9,12 @@ export const clearOrders = async (req: Request, res: Response) => {
         await prisma.order.deleteMany({})
         await prisma.cluster.deleteMany({})
         await prisma.rider.deleteMany({})
+        await prisma.rider.create({
+            data: {
+                username: "admin",
+                password: "admin",
+            }
+        })
         res.json({ msg: "Ready to start fresh" })
     }
     catch (err) {

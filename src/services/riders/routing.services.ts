@@ -15,7 +15,7 @@ export const routingAlgo = async () => {
     }) as any
     const riders = await prisma.rider.findMany({})
     const noOfOrders = consignments.length
-    const noOfRiders = await prisma.rider.count()
+    const noOfRiders = await prisma.rider.count() - 1   // subtracting admin
     const noOfHours = 5
     const warehouseLocation = {
         lat: 12.971599,
@@ -65,7 +65,7 @@ export const routingAlgo = async () => {
                                 return new Promise(async (resolve, reject) => {
                                     const newOrder: Order = await prisma.order.update({
                                         where: {
-                                            awb: order.awb 
+                                            awb: order.awb
                                         } as any,
                                         data: {
                                             clusterId: newCluster.id,
