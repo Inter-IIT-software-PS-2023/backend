@@ -26,33 +26,23 @@ model Address {
   lng      Float
   order    Order  @relation(fields: [orderId], references: [id])
   orderId  String @unique
-  pickup   Pickup? @relation(fields: [pickupId], references: [id])
-  pickupId String? @unique
-}
-
-model Pickup {
-  id        String   @id @default(uuid())
-  awb       String   @unique
-  pickupLat Float    @default(0)
-  pickupLng Float    @default(0)
-  reachTime Int      @default(0)
-  address   Address?
 }
 
 model Order {
-  id           String   @id @default(uuid())
-  productId    String
-  name         String
-  status       String
-  awb          String   @unique
-  reachTime    Int      @default(0)
-  deliveryTime Int      @default(0)
-  deliveryLat  Float    @default(0)
-  deliveryLng  Float    @default(0)
-  address      Address?
-  items        Item?
-  cluster      Cluster? @relation(fields: [clusterId], references: [id], onDelete: Cascade)
-  clusterId    String?
+  id             String   @id @default(uuid())
+  productId      String
+  name           String
+  status         String
+  awb            String   @unique
+  isDynamicPoint Boolean  @default(false)
+  reachTime      Int      @default(0)
+  deliveryTime   Int      @default(0)
+  deliveryLat    Float    @default(0)
+  deliveryLng    Float    @default(0)
+  address        Address?
+  items          Item?
+  cluster        Cluster? @relation(fields: [clusterId], references: [id], onDelete: Cascade)
+  clusterId      String?
 }
 
 model Rider {

@@ -73,6 +73,7 @@ export const routingAlgo = async () => {
                                             status: "ASSIGNED"
                                         }
                                     })
+                                        .catch(err => { throw new Error("Error in updating orders") })
                                     resolve(newOrder)
                                 })
                             })
