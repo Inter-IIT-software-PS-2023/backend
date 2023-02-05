@@ -48,6 +48,7 @@ model Rider {
   id       String   @id @default(uuid())
   username String   @unique
   password String
+  fcmToken String @default("")
   cluster  Cluster?
 }
 

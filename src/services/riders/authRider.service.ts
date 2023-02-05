@@ -1,11 +1,11 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient, Rider } from "@prisma/client"
 import jwt from "jsonwebtoken"
 
 const prisma = new PrismaClient()
 
-export const authRiderService = async (username: string, password: string) => {
+export const authRiderService = async (username: string, password: string, fcmToken: string) => {
     try {
-        const rider: any = await prisma.rider.findUnique({
+        const rider: Rider | null = await prisma.rider.findUnique({
             where: {
                 username: username
             } as any
@@ -17,6 +17,15 @@ export const authRiderService = async (username: string, password: string) => {
             throw new Error("Password is incorrect")
         }
         else {
+            if (rider.fcmToken === "" || rider.fcmToken !== fcmToken)
+                await prisma.rider.update({
+                    where: {
+                        id: rider.id
+                    },
+                    data: {
+                        fcmToken: fcmToken
+                    }
+                })
             const token = jwt.sign({ id: rider.id }, process.env.JWT_SECRET as string, { expiresIn: '1d' })
             return { token: token, login: true }
         }
