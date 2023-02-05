@@ -26,6 +26,17 @@ model Address {
   lng      Float
   order    Order  @relation(fields: [orderId], references: [id])
   orderId  String @unique
+  pickup   Pickup? @relation(fields: [pickupId], references: [id])
+  pickupId String? @unique
+}
+
+model Pickup {
+  id        String   @id @default(uuid())
+  awb       String   @unique
+  pickupLat Float    @default(0)
+  pickupLng Float    @default(0)
+  reachTime Int      @default(0)
+  address   Address?
 }
 
 model Order {
@@ -48,7 +59,7 @@ model Rider {
   id       String   @id @default(uuid())
   username String   @unique
   password String
-  fcmToken String @default("")
+  fcmToken String   @default("")
   cluster  Cluster?
 }
 
