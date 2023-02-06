@@ -1,7 +1,10 @@
 import { Order, PrismaClient } from "@prisma/client"
 import { messaging } from "firebase-admin"
+import path from "path"
+import fs from "fs"
 // import adminConfig from "../../admin/config"
 import { getGeocode } from "../../middleware/getGeocode"
+import { pickupInputSerializer } from "../../utils/pickupInputSerializer"
 const prisma = new PrismaClient()
 
 export const addOrderService = async (address: string) => {
@@ -18,10 +21,11 @@ export const addOrderService = async (address: string) => {
         //         body: "You have a new pickup point at " + address
         //     }
         // }
-        const [lat, lng] = newGeoCodes
-        const randomAWBnumber = Math.floor(Math.random() * 100000000000);
-        const randomSKU_ID = `SKU_${Math.floor(Math.random() * 1000)}`
-        await prisma.order.create({
+        const [lat, lng]: [number, number] = newGeoCodes
+        const randomAWBnumber: number = Math.floor(Math.random() * 100000000000);
+        const randomSKU_ID: string = `SKU_${Math.floor(Math.random() * 1000)}`
+        const pickupOutputFile = path.join(__dirname, "../../../src/algorithms/pickupInput.txt")
+        const newPickupPoint: Order = await prisma.order.create({
             data: {
                 awb: `${randomAWBnumber}`,
                 productId: randomSKU_ID,
@@ -38,26 +42,65 @@ export const addOrderService = async (address: string) => {
                 }
             }
         })
-        const consignments = await prisma.order.findMany({
-            include: {
-                address: true
+        const clusters = await prisma.cluster.findMany({
+            select: {
+                rider: {
+                    select: {
+                        username: true
+                    }
+                },
+                order: {
+                    select: {
+                        awb: true,
+                        reachTime: true,
+                        address: {
+                            select: {
+                                lat: true,
+                                lng: true
+                            }
+                        }
+                    }
+                }
             }
-        }) as any
-        const riders = await prisma.rider.findMany({})
-        const noOfOrders = consignments.length
+        })
+            .then(clusters => clusters)
+            .catch(err => { throw new Error("Cannot add dynamic point") })
+        const [serializedClusters, noOfOrders] = pickupInputSerializer(clusters)
         const noOfRiders = await prisma.rider.count() - 1   // subtracting admin
         const noOfHours = 5
         const warehouseLocation = {
             lat: 12.971599,
             lng: 77.638725
         }
-        let algoInput = {
+        const pickupInput = {
             noOfOrders: noOfOrders,
             noOfRiders: noOfRiders,
             warehouseLocation: warehouseLocation,
-            consignments: consignments
-        } as any
-        
+            consignments: [newPickupPoint],
+            clusters: serializedClusters
+        }
+        const pickupResponse = new Promise((resolve, reject) => {
+            fs.writeFile(pickupOutputFile, JSON.stringify(pickupInput), (err) => {
+                if (err) {
+                    reject({ err: err.message })
+                }
+            })
+            resolve("Done")
+        })
+        // const riders = await prisma.rider.findMany({})
+        // const noOfOrders = clusters.length
+        // const noOfRiders = await prisma.rider.count() - 1   // subtracting admin
+        // const noOfHours = 5
+        // const warehouseLocation = {
+        //     lat: 12.971599,
+        //     lng: 77.638725
+        // }
+        // let pickupInput = {
+        //     noOfOrders: noOfOrders,
+        //     noOfRiders: noOfRiders,
+        //     warehouseLocation: warehouseLocation,
+        //     consignments: consignments
+        // } 
 
         // messaging(adminConfig).sendToDevice(fcmToken, message)
         //     .then((response) => {
@@ -66,5 +109,6 @@ export const addOrderService = async (address: string) => {
         //     .catch((error) => {
         //         console.log("Error sending message:", error);
         //     })
+        return pickupResponse
     }
 }
