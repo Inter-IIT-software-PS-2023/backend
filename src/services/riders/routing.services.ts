@@ -1,4 +1,4 @@
-import { spawn, exec } from "child_process"
+import {  exec } from "child_process"
 import { Cluster, Order, PrismaClient } from "@prisma/client"
 import fs from "fs"
 import path from "path"
