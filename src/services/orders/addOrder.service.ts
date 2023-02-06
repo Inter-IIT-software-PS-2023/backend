@@ -40,6 +40,9 @@ export const addOrderService = async (address: string) => {
                         location: ""
                     }
                 }
+            },
+            include:{
+                address: true
             }
         })
         const clusters = await prisma.cluster.findMany({

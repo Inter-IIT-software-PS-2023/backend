@@ -38,11 +38,11 @@ export const routingAlgo = async () => {
                 reject({ err: err.message })
             }
             else {
-                exec(`"${execPath}" ${noOfHours} < "${inputFilePath}" > "${outputFilePath}"`, (err, stdout, stderr) => {
-                    if (err) {
-                        console.log("err ", err)
-                        reject({ err: err.message })
-                    }
+                // exec(`"${execPath}" ${noOfHours} < "${inputFilePath}" > "${outputFilePath}"`, (err, stdout, stderr) => {
+                //     if (err) {
+                //         console.log("err ", err)
+                //         reject({ err: err.message })
+                //     }
                 fs.readFile(outputFilePath, async (err, data) => {
                     if (err)
                         reject({ err: err.message })
@@ -94,7 +94,7 @@ export const routingAlgo = async () => {
                             })
                     }
                 })
-                })
+                // })
             }
         })
     })
