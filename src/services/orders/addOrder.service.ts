@@ -43,6 +43,13 @@ export const addOrderService = async (address: string) => {
             }
         })
         const clusters = await prisma.cluster.findMany({
+            where: {
+                order: {
+                    every: {
+                        status: "ASSIGNED"
+                    }
+                }
+            },
             select: {
                 rider: {
                     select: {
