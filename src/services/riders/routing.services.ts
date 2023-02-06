@@ -27,7 +27,8 @@ export const routingAlgo = async () => {
         warehouseLocation: warehouseLocation,
         consignments: consignments
     } as any
-    const execPath = path.join(__dirname, "../../../src/algorithms/exe")
+    const execPath = path.join(__dirname, "../../../src/algorithms/tsp.out")
+    // const execPath = path.join(__dirname, "../../../src/algorithms/exe")
     const inputFilePath = path.join(__dirname, "../../../src/algorithms/routingInput.txt")
     const outputFilePath = path.join(__dirname, "../../../src/algorithms/routingOutput.txt")
     algoInput = JSON.stringify(algoInput)
