@@ -42,7 +42,6 @@ export const addOrderService = async (address: string) => {
                             address: address,
                             lat: lat,
                             lng: lng,
-                            location: ""
                         }
                     }
                 },

@@ -27,7 +27,6 @@ export const parseNewOrders = async (data: any[]) => {
                             address: {
                                 create: {
                                     address: (item as any).address,
-                                    location: (item as any).location,
                                     lat: coords[0],
                                     lng: coords[1],
                                 }

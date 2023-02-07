@@ -23,7 +23,6 @@ model Item {
 model Address {
   id       String @id @default(uuid())
   address  String
-  location String
   lat      Float
   lng      Float
   order    Order  @relation(fields: [orderId], references: [id])
