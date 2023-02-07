@@ -12,8 +12,8 @@ model Item {
   objectType String
   payload    String
   qrData     String
-  order      Order  @relation(fields: [orderId], references: [id])
-  orderId    String @unique
+  order      Order?  @relation(fields: [orderId], references: [id])
+  orderId    String? @unique
 }
 
 model Address {
