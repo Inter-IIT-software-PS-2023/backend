@@ -1,14 +1,11 @@
 import { PrismaClient } from "@prisma/client"
+import { measureInput } from "../../controllers/orders/measureItem.controller";
 
 const prisma = new PrismaClient()
 
-export const measureItemService = async (objectType: string, payload: string, qrData: string) => {
+export const measureItemService = async (payload: measureInput) => {
     return await prisma.item.create({
-        data: {
-            objectType: objectType,
-            payload: payload,
-            qrData: qrData
-        } as any
+        data: payload
     })
         .then((data) => {
             return data;
