@@ -6,7 +6,6 @@ const prisma = new PrismaClient()
 type tempOrders = {     //this is a temporary type for the orders
     product_id: string,
     address: string,
-    location: string,
     lng: number,
     lat: number,
     name: string,
