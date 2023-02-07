@@ -8,14 +8,12 @@ generator client {
 }
 
 model Item {
-  id        String @id @default(uuid())
-  name      String
-  volWeight Int
-  dimX      Int
-  dimY      Int
-  dimZ      Int
-  order     Order  @relation(fields: [orderId], references: [id])
-  orderId   String @unique
+  id         String @id @default(uuid())
+  objectType String
+  payload    String
+  qrData     String
+  order      Order  @relation(fields: [orderId], references: [id])
+  orderId    String @unique
 }
 
 model Address {
