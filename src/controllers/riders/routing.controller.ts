@@ -17,12 +17,13 @@ export const runRoutingAlgo = async (req: Request, res: Response) => {
             }
         })
         await prisma.cluster.deleteMany({})
-        async()=>{
+        async () => {
             console.log("Algo running async")
             const runAlgoResponse = await routingAlgo()
-            redisClient.set(REDIS_KEY, JSON.stringify(runAlgoResponse))
+            // redisClient.set(REDIS_KEY, JSON.stringify(runAlgoResponse))
+            res.json(JSON.stringify(runAlgoResponse))
         }
-        res.json("Routing algo started, pool to /rider/getRouting")
+        // res.json("Routing algo started, pool to /rider/getRouting")
     }
     catch (err) {
         res.status(400).send({ Err: (err as Error).message })
