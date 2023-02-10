@@ -69,7 +69,10 @@ export const addOrderService = async (address: string) => {
             }
         })
             .then(clusters => clusters)
-            .catch(err => { throw new Error("Cannot add dynamic point") })
+            .catch(err => err)
+        if (clusters instanceof Error) {
+            throw new Error("Error in fetching clusters")
+        }
         const [serializedClusters, noOfOrders] = pickupInputSerializer(clusters)
         const noOfRiders = await prisma.rider.count() - 1   // subtracting admin
         const noOfHours = 5
@@ -111,7 +114,7 @@ export const addOrderService = async (address: string) => {
                                         throw new Error("Rider not found")
                                     }
                                     else {
-                                        const newReachTime = outputFileData.cluster[0].route.filter((route: any) => route.awb === randomAWBnumber).reachTime
+                                        const newReachTime = outputFileData.cluster[0].route.filter((route: any) => route.awb === randomAWBnumber)[0].reachTime
                                         const updatedOrder = await prisma.order.update({
                                             where: {
                                                 awb: `${randomAWBnumber}`
@@ -126,22 +129,26 @@ export const addOrderService = async (address: string) => {
                                                 }
                                             } as any
                                         })
-                                            .catch(err => { throw new Error("Cannot find rider to update") })
-                                        const fcmToken = rider.fcmToken
-                                        const message = {
-                                            notification: {
-                                                title: "New Pickup Point",
-                                                body: "You have a new pickup point at " + address
+                                            .catch(err => err)
+                                        if (updatedOrder instanceof Error)
+                                            throw new Error("Cannot add dynamic point")
+                                        else {
+                                            const fcmToken = rider.fcmToken
+                                            const message = {
+                                                notification: {
+                                                    title: "New Pickup Point",
+                                                    body: "You have a new pickup point at " + address
+                                                }
                                             }
+                                            messaging(adminConfig).sendToDevice(fcmToken, message)
+                                                .then((response) => {
+                                                    console.log("Successfully sent message:", response);
+                                                })
+                                                .catch((error) => {
+                                                    console.log("Error sending message:", error);
+                                                })
                                         }
 
-                                        messaging(adminConfig).sendToDevice(fcmToken, message)
-                                            .then((response) => {
-                                                console.log("Successfully sent message:", response);
-                                            })
-                                            .catch((error) => {
-                                                console.log("Error sending message:", error);
-                                            })
                                     }
                                 }
                             })
@@ -160,7 +167,7 @@ export const addOrderService = async (address: string) => {
                 }
             })
                 .then(clusters => clusters)
-                .catch(err => { throw new Error("Cannot add dynamic point") })
+                .catch(err => reject("Error in fetching clusters"))
             )
         })
         return pickupResponse
