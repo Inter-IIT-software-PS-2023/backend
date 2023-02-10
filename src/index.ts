@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import orderRouter from './routes/orders';
 import riderRouter from './routes/rider';
+import { initializeClient } from './utils/redisClient';
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ const app: Express = express()
 app.use(cors({ origin: '*' }))
 app.use(bodyParser.json({ limit: '10mb' }))
 const port = process.env.PORT
+initializeClient()
 
 app.get('/', (req, res) => {
   res.send('Hello from server')

@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 import { routingAlgo } from "../../services/riders/routing.services";
+import { redisClient, REDIS_KEY } from "../../utils/redisClient";
 
 const prisma = new PrismaClient()
 
@@ -16,8 +17,12 @@ export const runRoutingAlgo = async (req: Request, res: Response) => {
             }
         })
         await prisma.cluster.deleteMany({})
-        const runAlgoResponse = await routingAlgo()
-        res.json(runAlgoResponse)
+        async()=>{
+            console.log("Algo running async")
+            const runAlgoResponse = await routingAlgo()
+            redisClient.set(REDIS_KEY, JSON.stringify(runAlgoResponse))
+        }
+        res.json("Routing algo started, pool to /rider/getRouting")
     }
     catch (err) {
         res.status(400).send({ Err: (err as Error).message })
